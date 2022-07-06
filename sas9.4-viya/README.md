@@ -1,9 +1,10 @@
 ---
-description: The SAS® 9.4 and Viya QuickStart Template for Azure deploy these products on the cloud: SAS® Enterprise BI Server 9.4, SAS® Enterprise Miner 15.1, and SAS® Visual Analytics 8.5 on Linux, and SAS® Visual Data Mining and Machine Learning 8.5 on Linux for Viya. This QuickStart is a reference architecture for users who wants to deploy the combination of SAS® 9.4 and Viya on Azure using cloud-friendly technologies. By deploying the SAS® platform on Azure, you get an integrated environment of SAS® 9.4 and Viya environments so you can take advantage of both worlds. SAS® Viya is a cloud-enabled, in-memory analytics engine. It uses elastic, scalable, and fault-tolerant processing to address complex analytical challenges. SAS® Viya provides faster processing for analytics by using a standardized code base that supports programming in SAS®, Python, R, Java, and Lua. It also supports cloud, on-premises, or hybrid environments and deploys seamlessly to any infrastructure or application ecosystem.
+description: The SAS® 9.4 and Viya QuickStart Template for Azure deploy these products on the cloud - SAS® Enterprise BI Server 9.4, SAS® Enterprise Miner 15.1, and SAS® Visual Analytics 8.5 on Linux, and SAS® Visual Data Mining and Machine Learning 8.5 on Linux for Viya. This QuickStart is a reference architecture for users who wants to deploy the combination of SAS® 9.4 and Viya on Azure using cloud-friendly technologies. By deploying the SAS® platform on Azure, you get an integrated environment of SAS® 9.4 and Viya environments so you can take advantage of both worlds. SAS® Viya is a cloud-enabled, in-memory analytics engine. It uses elastic, scalable, and fault-tolerant processing to address complex analytical challenges. SAS® Viya provides faster processing for analytics by using a standardized code base that supports programming in SAS®, Python, R, Java, and Lua. It also supports cloud, on-premises, or hybrid environments and deploys seamlessly to any infrastructure or application ecosystem.
 page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: sas9.4-viya
 languages:
 - json
 ---
@@ -465,7 +466,4 @@ Please reach out to **Diane Hatcher** (diane.hatcher@corecompete.com) and **Rohi
 ## Acknowledgements
 We are thankful to **Intel Corporation** for sponsoring this development effort. We are thankful to **SAS Institute** for supporting this effort and including providing technical guidance and validation.
 
-```
-Tags: SAS, SAS 9.4, Viya, SAS Viya, Core Compete, corecompete, SAS 9.4 and Viya
-```
-`Tags: Microsoft.Compute/proximityPlacementGroups, Microsoft.Network/virtualNetworks, Microsoft.Network/networkSecurityGroups, Microsoft.KeyVault/vaults, Microsoft.KeyVault/vaults/secrets, Microsoft.Storage/storageAccounts, Microsoft.Network/publicIPAddresses, Microsoft.Network/networkInterfaces, Microsoft.Compute/virtualMachines, SystemAssigned, Microsoft.Resources/deployments, Microsoft.KeyVault/vaults/accessPolicies, Microsoft.Authorization/roleAssignments, Microsoft.Compute/virtualMachines/extensions, CustomScript, CustomScriptExtension`
+`Tags: SAS, SAS 9.4, Viya, SAS Viya, Core Compete, corecompete, SAS 9.4 and Viya, Microsoft.Compute/proximityPlacementGroups, Microsoft.Network/virtualNetworks, Microsoft.Network/networkSecurityGroups, Microsoft.KeyVault/vaults, Microsoft.KeyVault/vaults/secrets, Microsoft.Storage/storageAccounts, Microsoft.Network/publicIPAddresses, Microsoft.Network/networkInterfaces, Microsoft.Compute/virtualMachines, SystemAssigned, Microsoft.Resources/deployments, Microsoft.KeyVault/vaults/accessPolicies, Microsoft.Authorization/roleAssignments, Microsoft.Compute/virtualMachines/extensions, CustomScript, CustomScriptExtension`

@@ -4,11 +4,12 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: nat-gateway-1-vm
 languages:
 - json
 - bicep
 ---
-# Virtual Network NAT
+# Virtual Network NAT with VM
 
 ![Azure Public Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.network/nat-gateway-1-vm/PublicLastTestDate.svg)
 ![Azure Public Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.network/nat-gateway-1-vm/PublicDeployment.svg)

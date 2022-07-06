@@ -4,6 +4,7 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: cloudlens-suricata-ubuntu
 languages:
 - json
 ---
@@ -48,7 +49,7 @@ This template will deploy:
 -	2 Public IP’s, one for the tapping vm and one for the Suricata IDS
 -	Two UbuntuServer 16.04.0-LTS VMs
 
-![Deployment Solution Architecture](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/application-workloads/cloudlens/cloudlens-suricata-ubuntu/images/architecture.png?raw=true)
+![Deployment Solution Architecture](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/application-workloads/cloudlens/cloudlens-suricata-ubuntu/images/architecture.png)
 
 ## Licenses and Costs
 

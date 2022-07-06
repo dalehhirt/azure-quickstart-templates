@@ -4,11 +4,12 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: event-grid-servicebus-queue
 languages:
 - json
 - bicep
 ---
-# Create Azure Event Grid Custom Topic and Subscription
+# Create Azure Event Grid Custom Topic and Queue Subscription
 
 ![Azure Public Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.eventgrid/event-grid-servicebus-queue/PublicLastTestDate.svg)
 ![Azure Public Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.eventgrid/event-grid-servicebus-queue/PublicDeployment.svg)

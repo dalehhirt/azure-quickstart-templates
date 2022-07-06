@@ -4,10 +4,11 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: machine-learning-workspace-vnet-v1-legacy-mode
 languages:
 - json
 ---
-# Create an Azure Machine Learning service workspace.
+# Create an Azure Machine Learning service workspace (legacy)
 
 ![Azure Public Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.machinelearningservices/machine-learning-workspace-vnet-v1-legacy-mode/PublicLastTestDate.svg)
 ![Azure Public Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.machinelearningservices/machine-learning-workspace-vnet-v1-legacy-mode/PublicDeployment.svg)

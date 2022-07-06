@@ -4,10 +4,11 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: application-gateway-probe
 languages:
 - json
 ---
-# Create an Application Gateway
+# Create an Application Gateway with Probe
 
 ![Azure Public Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.network/application-gateway-probe/PublicLastTestDate.svg)
 ![Azure Public Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.network/application-gateway-probe/PublicDeployment.svg)

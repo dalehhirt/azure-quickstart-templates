@@ -4,10 +4,11 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: vmss-win-existing-vnet
 languages:
 - json
 ---
-# Deploy a Scale Set into an existing vnet
+# Deploy a Scale Set into an existing vnet on Windows
 
 ![Azure Public Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.compute/vmss-win-existing-vnet/PublicLastTestDate.svg)
 ![Azure Public Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.compute/vmss-win-existing-vnet/PublicDeployment.svg)

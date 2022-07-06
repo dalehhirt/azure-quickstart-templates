@@ -4,6 +4,7 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: s2d-oms-mgmt-solution
 languages:
 - json
 ---
@@ -317,10 +318,6 @@ C:\temp\s2dmon.ps1 -Remove
 C:\temp\s2dmon.ps1 -Setup -OMSWorkspaceCreds (Get-Credential)
 C:\temp\s2dmon.ps1 -Start
 ```
-
-- Delete S2D solution from Azure portal
-
-![](images/delete-s2d.png)
 
 - Deploy S2D ARM template again.
 

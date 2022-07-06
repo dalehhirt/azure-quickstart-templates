@@ -4,10 +4,11 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: app-configuration
 languages:
 - json
 ---
-# App Configuration
+# App Configuration with VM
 
 ![Azure Public Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.appconfiguration/app-configuration/PublicLastTestDate.svg)
 ![Azure Public Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.appconfiguration/app-configuration/PublicDeployment.svg)

@@ -4,10 +4,11 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: application-gateway-redirect
 languages:
 - json
 ---
-# Create an Application Gateway
+# Create an Application Gateway with Redirect
 
 ![Azure Public Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.network/application-gateway-redirect/PublicLastTestDate.svg)
 ![Azure Public Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.network/application-gateway-redirect/PublicDeployment.svg)

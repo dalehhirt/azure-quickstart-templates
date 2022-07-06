@@ -4,10 +4,11 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: vm-simple-rhel-unmanaged
 languages:
 - json
 ---
-# Red Hat Enterprise Linux VM (RHEL 7.8)
+# Red Hat Enterprise Linux VM (RHEL 7.8 unmanaged)
 
 ![Azure Public Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.compute/vm-simple-rhel-unmanaged/PublicLastTestDate.svg)
 ![Azure Public Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.compute/vm-simple-rhel-unmanaged/PublicDeployment.svg)

@@ -4,10 +4,11 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: eventhubs-create-namespace-and-enable-capture-for-adls
 languages:
 - json
 ---
-# Create EventHubs with Capture enabled
+# Create EventHubs with Capture enabled (ADLS)
 
 ![Azure Public Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.eventhub/eventhubs-create-namespace-and-enable-capture-for-adls/PublicLastTestDate.svg)
 ![Azure Public Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.eventhub/eventhubs-create-namespace-and-enable-capture-for-adls/PublicDeployment.svg)

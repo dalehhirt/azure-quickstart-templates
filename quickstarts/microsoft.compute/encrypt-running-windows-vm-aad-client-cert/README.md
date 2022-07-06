@@ -4,10 +4,11 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: encrypt-running-windows-vm-aad-client-cert
 languages:
 - json
 ---
-# Enable encryption on a running Windows VM.
+# Enable encryption on a running Windows VM & AAD
 
 ![Azure Public Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.compute/encrypt-running-windows-vm-aad-client-cert/PublicLastTestDate.svg)
 ![Azure Public Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.compute/encrypt-running-windows-vm-aad-client-cert/PublicDeployment.svg)

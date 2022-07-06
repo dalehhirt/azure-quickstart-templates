@@ -4,10 +4,11 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: azure-bastion-nsg
 languages:
 - json
 ---
-# Azure Bastion as a Service
+# Azure Bastion as a Service with NSG
 
 ![Azure Public Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.network/azure-bastion-nsg/PublicLastTestDate.svg)
 ![Azure Public Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.network/azure-bastion-nsg/PublicDeployment.svg)

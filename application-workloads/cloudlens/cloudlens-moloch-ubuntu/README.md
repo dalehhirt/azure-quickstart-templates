@@ -4,6 +4,7 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: cloudlens-moloch-ubuntu
 languages:
 - json
 ---
@@ -48,7 +49,7 @@ This template will deploy:
 -	2 Public IP’s, one for the tapping vm and one for the Moloch tool
 -	Two UbuntuServer 16.04.0-LTS VMs
 
-![Deployment Solution Architecture](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/application-workloads/cloudlens/cloudlens-moloch-ubuntu/images/architecture.png?raw=true)
+![Deployment Solution Architecture](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/application-workloads/cloudlens/cloudlens-moloch-ubuntu/images/architecture.png)
 
 ## Licenses and Costs
 
@@ -95,4 +96,4 @@ For any support related questions, issues or customization requirements, please 
 https://www.ixiacom.com/products/cloudlens-public
 ```
 
-`Tags:Microsoft.Storage/storageAccounts, Microsoft.Network/publicIPAddresses, Microsoft.Network/networkSecurityGroups, Microsoft.Network/virtualNetworks, Microsoft.Network/networkInterfaces, Microsoft.Compute/virtualMachines, Microsoft.Compute/virtualMachines/extensions, CustomScript`
+`Tags: Microsoft.Storage/storageAccounts, Microsoft.Network/publicIPAddresses, Microsoft.Network/networkSecurityGroups, Microsoft.Network/virtualNetworks, Microsoft.Network/networkInterfaces, Microsoft.Compute/virtualMachines, Microsoft.Compute/virtualMachines/extensions, CustomScript`

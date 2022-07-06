@@ -4,6 +4,7 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: cohesive-vns3-free-try-now
 languages:
 - json
 ---

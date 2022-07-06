@@ -4,10 +4,11 @@ page_type: sample
 products:
 - azure
 - azure-resource-manager
+urlFragment: data-factory-v2-onprem-sql-to-blob-copy
 languages:
 - json
 ---
-# Create a V2 data factory
+# Create a V2 data factory (SQL On-prem)
 
 ![Azure Public Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.datafactory/data-factory-v2-onprem-sql-to-blob-copy/PublicLastTestDate.svg)
 ![Azure Public Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.datafactory/data-factory-v2-onprem-sql-to-blob-copy/PublicDeployment.svg)
