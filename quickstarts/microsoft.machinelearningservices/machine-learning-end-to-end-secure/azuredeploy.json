@@ -4,18 +4,18 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.6.1.6515",
-      "templateHash": "15125621127675140108"
+      "version": "0.22.6.54827",
+      "templateHash": "14837695993710666307"
     }
   },
   "parameters": {
     "prefix": {
       "type": "string",
+      "minLength": 2,
+      "maxLength": 10,
       "metadata": {
         "description": "Prefix for all resource names."
-      },
-      "maxLength": 10,
-      "minLength": 2
+      }
     },
     "location": {
       "type": "string",
@@ -73,11 +73,11 @@
       }
     },
     "dsvmJumpboxPassword": {
-      "type": "secureString",
+      "type": "securestring",
+      "minLength": 8,
       "metadata": {
         "description": "Jumphost virtual machine password"
-      },
-      "minLength": 8
+      }
     },
     "amlComputePublicIp": {
       "type": "bool",
@@ -101,7 +101,7 @@
   "resources": [
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "name": "[format('nsg-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -125,8 +125,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.6.1.6515",
-              "templateHash": "14553973656271181280"
+              "version": "0.22.6.54827",
+              "templateHash": "9300262200889984871"
             }
           },
           "parameters": {
@@ -152,7 +152,7 @@
           "resources": [
             {
               "type": "Microsoft.Network/networkSecurityGroups",
-              "apiVersion": "2020-06-01",
+              "apiVersion": "2022-01-01",
               "name": "[parameters('nsgName')]",
               "location": "[parameters('location')]",
               "tags": "[parameters('tags')]",
@@ -290,7 +290,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "name": "[format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -305,7 +305,7 @@
             "value": "[format('vnet-{0}-{1}', variables('name'), variables('uniqueSuffix'))]"
           },
           "networkSecurityGroupId": {
-            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('nsg-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.networkSecurityGroup.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('nsg-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.networkSecurityGroup.value]"
           },
           "vnetAddressPrefix": {
             "value": "[parameters('vnetAddressPrefix')]"
@@ -326,8 +326,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.6.1.6515",
-              "templateHash": "4168976883790134875"
+              "version": "0.22.6.54827",
+              "templateHash": "10356818880581245185"
             }
           },
           "parameters": {
@@ -382,7 +382,7 @@
           "resources": [
             {
               "type": "Microsoft.Network/virtualNetworks",
-              "apiVersion": "2020-06-01",
+              "apiVersion": "2022-01-01",
               "name": "[parameters('virtualNetworkName')]",
               "location": "[parameters('location')]",
               "tags": "[parameters('tags')]",
@@ -448,7 +448,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "name": "[format('kv-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -466,10 +466,10 @@
             "value": "[format('ple-{0}-{1}-kv', variables('name'), variables('uniqueSuffix'))]"
           },
           "subnetId": {
-            "value": "[format('{0}/subnets/snet-training', reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.id.value)]"
+            "value": "[format('{0}/subnets/snet-training', reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.id.value)]"
           },
           "virtualNetworkId": {
-            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.id.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.id.value]"
           },
           "tags": {
             "value": "[parameters('tags')]"
@@ -481,8 +481,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.6.1.6515",
-              "templateHash": "9355942181650505286"
+              "version": "0.22.6.54827",
+              "templateHash": "6617626327846188001"
             }
           },
           "parameters": {
@@ -557,7 +557,7 @@
             },
             {
               "type": "Microsoft.Network/privateEndpoints",
-              "apiVersion": "2020-06-01",
+              "apiVersion": "2022-01-01",
               "name": "[parameters('keyvaultPleName')]",
               "location": "[parameters('location')]",
               "tags": "[parameters('tags')]",
@@ -589,7 +589,7 @@
             },
             {
               "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
-              "apiVersion": "2020-06-01",
+              "apiVersion": "2022-01-01",
               "name": "[format('{0}/vault-PrivateDnsZoneGroup', parameters('keyvaultPleName'))]",
               "properties": {
                 "privateDnsZoneConfigs": [
@@ -637,7 +637,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "name": "[format('st{0}{1}-deployment', variables('name'), variables('uniqueSuffix'))]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -661,10 +661,10 @@
             "value": "Standard_LRS"
           },
           "subnetId": {
-            "value": "[format('{0}/subnets/snet-training', reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.id.value)]"
+            "value": "[format('{0}/subnets/snet-training', reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.id.value)]"
           },
           "virtualNetworkId": {
-            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.id.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.id.value]"
           },
           "tags": {
             "value": "[parameters('tags')]"
@@ -676,8 +676,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.6.1.6515",
-              "templateHash": "4317985986637156335"
+              "version": "0.22.6.54827",
+              "templateHash": "14002377599654824735"
             }
           },
           "parameters": {
@@ -726,9 +726,6 @@
             "storageSkuName": {
               "type": "string",
               "defaultValue": "Standard_LRS",
-              "metadata": {
-                "description": "Storage SKU"
-              },
               "allowedValues": [
                 "Standard_LRS",
                 "Standard_ZRS",
@@ -738,7 +735,10 @@
                 "Standard_RAGZRS",
                 "Premium_LRS",
                 "Premium_ZRS"
-              ]
+              ],
+              "metadata": {
+                "description": "Storage SKU"
+              }
             }
           },
           "variables": {
@@ -749,7 +749,7 @@
           "resources": [
             {
               "type": "Microsoft.Storage/storageAccounts",
-              "apiVersion": "2021-04-01",
+              "apiVersion": "2021-09-01",
               "name": "[variables('storageNameCleaned')]",
               "location": "[parameters('location')]",
               "tags": "[parameters('tags')]",
@@ -800,7 +800,7 @@
             },
             {
               "type": "Microsoft.Network/privateEndpoints",
-              "apiVersion": "2020-06-01",
+              "apiVersion": "2022-01-01",
               "name": "[parameters('storagePleBlobName')]",
               "location": "[parameters('location')]",
               "tags": "[parameters('tags')]",
@@ -831,7 +831,7 @@
             },
             {
               "type": "Microsoft.Network/privateEndpoints",
-              "apiVersion": "2020-06-01",
+              "apiVersion": "2022-01-01",
               "name": "[parameters('storagePleFileName')]",
               "location": "[parameters('location')]",
               "tags": "[parameters('tags')]",
@@ -868,7 +868,7 @@
             },
             {
               "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
-              "apiVersion": "2020-06-01",
+              "apiVersion": "2022-01-01",
               "name": "[format('{0}/blob-PrivateDnsZoneGroup', parameters('storagePleBlobName'))]",
               "properties": {
                 "privateDnsZoneConfigs": [
@@ -909,7 +909,7 @@
             },
             {
               "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
-              "apiVersion": "2020-06-01",
+              "apiVersion": "2022-01-01",
               "name": "[format('{0}/flie-PrivateDnsZoneGroup', parameters('storagePleFileName'))]",
               "properties": {
                 "privateDnsZoneConfigs": [
@@ -957,7 +957,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "name": "[format('cr{0}{1}-deployment', variables('name'), variables('uniqueSuffix'))]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -975,10 +975,10 @@
             "value": "[format('ple-{0}-{1}-cr', variables('name'), variables('uniqueSuffix'))]"
           },
           "subnetId": {
-            "value": "[format('{0}/subnets/snet-training', reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.id.value)]"
+            "value": "[format('{0}/subnets/snet-training', reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.id.value)]"
           },
           "virtualNetworkId": {
-            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.id.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.id.value]"
           },
           "tags": {
             "value": "[parameters('tags')]"
@@ -990,8 +990,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.6.1.6515",
-              "templateHash": "11754293483411108266"
+              "version": "0.22.6.54827",
+              "templateHash": "6417945191611015305"
             }
           },
           "parameters": {
@@ -1056,7 +1056,7 @@
                 },
                 "policies": {
                   "quarantinePolicy": {
-                    "status": "enabled"
+                    "status": "disabled"
                   },
                   "retentionPolicy": {
                     "status": "enabled",
@@ -1073,7 +1073,7 @@
             },
             {
               "type": "Microsoft.Network/privateEndpoints",
-              "apiVersion": "2020-06-01",
+              "apiVersion": "2022-01-01",
               "name": "[parameters('containerRegistryPleName')]",
               "location": "[parameters('location')]",
               "tags": "[parameters('tags')]",
@@ -1105,7 +1105,7 @@
             },
             {
               "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
-              "apiVersion": "2020-06-01",
+              "apiVersion": "2022-01-01",
               "name": "[format('{0}/{1}-PrivateDnsZoneGroup', parameters('containerRegistryPleName'), variables('groupName'))]",
               "properties": {
                 "privateDnsZoneConfigs": [
@@ -1153,7 +1153,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "name": "[format('appi-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -1167,6 +1167,9 @@
           "applicationInsightsName": {
             "value": "[format('appi-{0}-{1}', variables('name'), variables('uniqueSuffix'))]"
           },
+          "logAnalyticsWorkspaceName": {
+            "value": "[format('ws-{0}-{1}', variables('name'), variables('uniqueSuffix'))]"
+          },
           "tags": {
             "value": "[parameters('tags')]"
           }
@@ -1177,8 +1180,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.6.1.6515",
-              "templateHash": "2209603311537625297"
+              "version": "0.22.6.54827",
+              "templateHash": "8569829583305523334"
             }
           },
           "parameters": {
@@ -1201,9 +1204,29 @@
               "metadata": {
                 "description": "Application Insights resource name"
               }
+            },
+            "logAnalyticsWorkspaceName": {
+              "type": "string",
+              "metadata": {
+                "description": "Log Analytics resource name"
+              }
             }
           },
           "resources": [
+            {
+              "type": "Microsoft.OperationalInsights/workspaces",
+              "apiVersion": "2021-06-01",
+              "name": "[parameters('logAnalyticsWorkspaceName')]",
+              "location": "[parameters('location')]",
+              "properties": {
+                "sku": {
+                  "name": "PerGB2018"
+                },
+                "retentionInDays": 30,
+                "publicNetworkAccessForIngestion": "Enabled",
+                "publicNetworkAccessForQuery": "Disabled"
+              }
+            },
             {
               "type": "Microsoft.Insights/components",
               "apiVersion": "2020-02-02",
@@ -1213,16 +1236,12 @@
               "kind": "web",
               "properties": {
                 "Application_Type": "web",
-                "DisableIpMasking": false,
-                "DisableLocalAuth": false,
-                "Flow_Type": "Bluefield",
-                "ForceCustomerStorageForProfiler": false,
-                "ImmediatePurgeDataOn30Days": true,
-                "IngestionMode": "ApplicationInsights",
-                "publicNetworkAccessForIngestion": "Enabled",
-                "publicNetworkAccessForQuery": "Disabled",
-                "Request_Source": "rest"
-              }
+                "WorkspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsWorkspaceName'))]",
+                "Flow_Type": "Bluefield"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsWorkspaceName'))]"
+              ]
             }
           ],
           "outputs": {
@@ -1236,7 +1255,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "name": "[format('mlw-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -1263,28 +1282,28 @@
             "value": "[parameters('tags')]"
           },
           "applicationInsightsId": {
-            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('appi-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.applicationInsightsId.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('appi-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.applicationInsightsId.value]"
           },
           "containerRegistryId": {
-            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('cr{0}{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.containerRegistryId.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('cr{0}{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.containerRegistryId.value]"
           },
           "keyVaultId": {
-            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('kv-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.keyvaultId.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('kv-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.keyvaultId.value]"
           },
           "storageAccountId": {
-            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('st{0}{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.storageId.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('st{0}{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.storageId.value]"
           },
           "subnetId": {
-            "value": "[format('{0}/subnets/snet-training', reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.id.value)]"
+            "value": "[format('{0}/subnets/snet-training', reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.id.value)]"
           },
           "computeSubnetId": {
-            "value": "[format('{0}/subnets/snet-training', reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.id.value)]"
+            "value": "[format('{0}/subnets/snet-training', reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.id.value)]"
           },
           "aksSubnetId": {
-            "value": "[format('{0}/subnets/snet-scoring', reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.id.value)]"
+            "value": "[format('{0}/subnets/snet-scoring', reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.id.value)]"
           },
           "virtualNetworkId": {
-            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.id.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.id.value]"
           },
           "machineLearningPleName": {
             "value": "[format('ple-{0}-{1}-mlw', variables('name'), variables('uniqueSuffix'))]"
@@ -1305,8 +1324,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.6.1.6515",
-              "templateHash": "10263492879055276209"
+              "version": "0.22.6.54827",
+              "templateHash": "3824042320203608415"
             }
           },
           "parameters": {
@@ -1424,7 +1443,7 @@
           "resources": [
             {
               "type": "Microsoft.MachineLearningServices/workspaces",
-              "apiVersion": "2022-01-01-preview",
+              "apiVersion": "2022-05-01",
               "name": "[parameters('machineLearningName')]",
               "location": "[parameters('location')]",
               "tags": "[parameters('tags')]",
@@ -1444,7 +1463,7 @@
             },
             {
               "type": "Microsoft.Resources/deployments",
-              "apiVersion": "2020-10-01",
+              "apiVersion": "2022-09-01",
               "name": "machineLearningNetworking",
               "properties": {
                 "expressionEvaluationOptions": {
@@ -1477,8 +1496,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.6.1.6515",
-                      "templateHash": "189819046744206201"
+                      "version": "0.22.6.54827",
+                      "templateHash": "5379221828291825785"
                     }
                   },
                   "parameters": {
@@ -1534,7 +1553,7 @@
                   "resources": [
                     {
                       "type": "Microsoft.Network/privateEndpoints",
-                      "apiVersion": "2020-06-01",
+                      "apiVersion": "2022-01-01",
                       "name": "[parameters('machineLearningPleName')]",
                       "location": "[parameters('location')]",
                       "tags": "[parameters('tags')]",
@@ -1599,7 +1618,7 @@
                     },
                     {
                       "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
-                      "apiVersion": "2020-06-01",
+                      "apiVersion": "2022-01-01",
                       "name": "[format('{0}/amlworkspace-PrivateDnsZoneGroup', parameters('machineLearningPleName'))]",
                       "properties": {
                         "privateDnsZoneConfigs": [
@@ -1632,7 +1651,7 @@
             },
             {
               "type": "Microsoft.Resources/deployments",
-              "apiVersion": "2020-10-01",
+              "apiVersion": "2022-09-01",
               "name": "machineLearningComputes",
               "properties": {
                 "expressionEvaluationOptions": {
@@ -1674,8 +1693,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.6.1.6515",
-                      "templateHash": "7266212680162415686"
+                      "version": "0.22.6.54827",
+                      "templateHash": "13977547577004845106"
                     }
                   },
                   "parameters": {
@@ -1737,7 +1756,7 @@
                   "resources": [
                     {
                       "type": "Microsoft.MachineLearningServices/workspaces/computes",
-                      "apiVersion": "2021-07-01",
+                      "apiVersion": "2022-05-01",
                       "name": "[format('{0}/cluster001', parameters('machineLearning'))]",
                       "location": "[parameters('location')]",
                       "tags": "[parameters('tags')]",
@@ -1769,7 +1788,7 @@
                     },
                     {
                       "type": "Microsoft.MachineLearningServices/workspaces/computes",
-                      "apiVersion": "2021-07-01",
+                      "apiVersion": "2022-05-01",
                       "name": "[format('{0}/{1}-ci001', parameters('machineLearning'), parameters('prefix'))]",
                       "location": "[parameters('location')]",
                       "tags": "[parameters('tags')]",
@@ -1796,7 +1815,7 @@
                     },
                     {
                       "type": "Microsoft.Resources/deployments",
-                      "apiVersion": "2020-10-01",
+                      "apiVersion": "2022-09-01",
                       "name": "[parameters('aksName')]",
                       "properties": {
                         "expressionEvaluationOptions": {
@@ -1832,8 +1851,8 @@
                           "metadata": {
                             "_generator": {
                               "name": "bicep",
-                              "version": "0.6.1.6515",
-                              "templateHash": "5107069980458385127"
+                              "version": "0.22.6.54827",
+                              "templateHash": "6366365386259200500"
                             }
                           },
                           "parameters": {
@@ -1883,7 +1902,7 @@
                           "resources": [
                             {
                               "type": "Microsoft.ContainerService/managedClusters",
-                              "apiVersion": "2020-07-01",
+                              "apiVersion": "2022-04-01",
                               "name": "[parameters('aksClusterName')]",
                               "location": "[parameters('location')]",
                               "tags": "[parameters('tags')]",
@@ -1891,7 +1910,7 @@
                                 "type": "SystemAssigned"
                               },
                               "properties": {
-                                "kubernetesVersion": "1.22.4",
+                                "kubernetesVersion": "1.27.1",
                                 "dnsPrefix": "[format('{0}-dns', parameters('aksClusterName'))]",
                                 "agentPoolProfiles": [
                                   {
@@ -1921,7 +1940,7 @@
                             },
                             {
                               "type": "Microsoft.MachineLearningServices/workspaces/computes",
-                              "apiVersion": "2021-01-01",
+                              "apiVersion": "2022-05-01",
                               "name": "[format('{0}/{1}', parameters('workspaceName'), parameters('computeName'))]",
                               "location": "[parameters('location')]",
                               "properties": {
@@ -1975,7 +1994,7 @@
     {
       "condition": "[parameters('deployJumphost')]",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "name": "[format('vm-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -1990,7 +2009,7 @@
             "value": "[format('vm-{0}-{1}', variables('name'), variables('uniqueSuffix'))]"
           },
           "subnetId": {
-            "value": "[format('{0}/subnets/snet-training', reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.id.value)]"
+            "value": "[format('{0}/subnets/snet-training', reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.id.value)]"
           },
           "adminUsername": {
             "value": "[parameters('dsvmJumpboxUsername')]"
@@ -1999,7 +2018,7 @@
             "value": "[parameters('dsvmJumpboxPassword')]"
           },
           "networkSecurityGroupId": {
-            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('nsg-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.networkSecurityGroup.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('nsg-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.networkSecurityGroup.value]"
           },
           "vmSizeParameter": {
             "value": "[parameters('amlComputeDefaultVmSize')]"
@@ -2011,8 +2030,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.6.1.6515",
-              "templateHash": "3511332983805613376"
+              "version": "0.22.6.54827",
+              "templateHash": "13566914486894350894"
             }
           },
           "parameters": {
@@ -2054,11 +2073,11 @@
               }
             },
             "adminPassword": {
-              "type": "secureString",
+              "type": "securestring",
+              "minLength": 8,
               "metadata": {
                 "description": "Virtual machine admin password"
-              },
-              "minLength": 8
+              }
             }
           },
           "variables": {
@@ -2067,7 +2086,7 @@
           "resources": [
             {
               "type": "Microsoft.Network/networkInterfaces",
-              "apiVersion": "2020-06-01",
+              "apiVersion": "2022-07-01",
               "name": "[format('{0}-nic', parameters('virtualMachineName'))]",
               "location": "[parameters('location')]",
               "properties": {
@@ -2175,7 +2194,7 @@
     {
       "condition": "[parameters('deployJumphost')]",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "name": "[format('bas-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -2190,7 +2209,7 @@
             "value": "[parameters('location')]"
           },
           "vnetName": {
-            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix')))).outputs.name.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('vnet-{0}-{1}-deployment', variables('name'), variables('uniqueSuffix'))), '2022-09-01').outputs.name.value]"
           },
           "addressPrefix": {
             "value": "[parameters('azureBastionSubnetPrefix')]"
@@ -2202,8 +2221,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.6.1.6515",
-              "templateHash": "8035098810731039964"
+              "version": "0.22.6.54827",
+              "templateHash": "16136205915114053165"
             }
           },
           "parameters": {
@@ -2248,7 +2267,7 @@
           "resources": [
             {
               "type": "Microsoft.Network/virtualNetworks/subnets",
-              "apiVersion": "2020-06-01",
+              "apiVersion": "2022-01-01",
               "name": "[format('{0}/{1}', parameters('vnetName'), variables('subnetName'))]",
               "properties": {
                 "addressPrefix": "[parameters('addressPrefix')]",
@@ -2258,7 +2277,7 @@
             },
             {
               "type": "Microsoft.Network/publicIPAddresses",
-              "apiVersion": "2020-08-01",
+              "apiVersion": "2022-01-01",
               "name": "[parameters('publicIpName')]",
               "location": "[parameters('location')]",
               "sku": {
@@ -2270,7 +2289,7 @@
             },
             {
               "type": "Microsoft.Network/bastionHosts",
-              "apiVersion": "2020-06-01",
+              "apiVersion": "2022-01-01",
               "name": "[parameters('bastionHostName')]",
               "location": "[parameters('location')]",
               "properties": {

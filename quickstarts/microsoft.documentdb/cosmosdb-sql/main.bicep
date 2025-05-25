@@ -1,13 +1,13 @@
-@description('Cosmos DB account name, max length 44 characters')
+@description('Azure Cosmos DB account name, max length 44 characters')
 param accountName string = 'sql-${uniqueString(resourceGroup().id)}'
 
-@description('Location for the Cosmos DB account.')
+@description('Location for the Azure Cosmos DB account.')
 param location string = resourceGroup().location
 
-@description('The primary replica region for the Cosmos DB account.')
+@description('The primary region for the Azure Cosmos DB account.')
 param primaryRegion string
 
-@description('The secondary replica region for the Cosmos DB account.')
+@description('The secondary region for the Azure Cosmos DB account.')
 param secondaryRegion string
 
 @allowed([
@@ -22,7 +22,7 @@ param defaultConsistencyLevel string = 'Session'
 
 @minValue(10)
 @maxValue(2147483647)
-@description('Max stale requests. Required for BoundedStaleness. Valid ranges, Single Region: 10 to 1000000. Multi Region: 100000 to 1000000.')
+@description('Max stale requests. Required for BoundedStaleness. Valid ranges, Single Region: 10 to 2147483647. Multi Region: 100000 to 2147483647.')
 param maxStalenessPrefix int = 100000
 
 @minValue(5)
@@ -34,8 +34,8 @@ param maxIntervalInSeconds int = 300
   true
   false
 ])
-@description('Enable automatic failover for regions')
-param automaticFailover bool = true
+@description('Enable system managed failover for regions')
+param systemManagedFailover bool = true
 
 @description('The name for the database')
 param databaseName string = 'myDatabase'
@@ -80,7 +80,7 @@ var locations = [
   }
 ]
 
-resource account 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+resource account 'Microsoft.DocumentDB/databaseAccounts@2024-02-15-preview' = {
   name: toLower(accountName)
   location: location
   kind: 'GlobalDocumentDB'
@@ -88,12 +88,14 @@ resource account 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
     consistencyPolicy: consistencyPolicy[defaultConsistencyLevel]
     locations: locations
     databaseAccountOfferType: 'Standard'
-    enableAutomaticFailover: automaticFailover
+    enableAutomaticFailover: systemManagedFailover
+    disableKeyBasedMetadataWriteAccess: true
   }
 }
 
-resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15' = {
-  name: '${account.name}/${databaseName}'
+resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2024-02-15-preview' = {
+  parent: account
+  name: databaseName
   properties: {
     resource: {
       id: databaseName
@@ -101,8 +103,9 @@ resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15
   }
 }
 
-resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2021-10-15' = {
-  name: '${database.name}/${containerName}'
+resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2024-02-15-preview' = {
+  parent: database
+  name: containerName
   properties: {
     resource: {
       id: containerName
@@ -122,6 +125,9 @@ resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/container
         excludedPaths: [
           {
             path: '/myPathToNotIndex/*'
+          }
+          {
+            path: '/_etag/?'
           }
         ]
         compositeIndexes: [
@@ -164,3 +170,8 @@ resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/container
     }
   }
 }
+
+output location string = location
+output name string = database.name
+output resourceGroupName string = resourceGroup().name
+output resourceId string = database.id

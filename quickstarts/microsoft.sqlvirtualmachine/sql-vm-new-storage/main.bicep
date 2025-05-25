@@ -17,23 +17,23 @@ param existingSubnetName string
 @allowed([
   'sql2019-ws2019'
   'sql2017-ws2019'
-  'SQL2017-WS2016'
+  'sql2019-ws2022'
   'SQL2016SP1-WS2016'
   'SQL2016SP2-WS2016'
   'SQL2014SP3-WS2012R2'
   'SQL2014SP2-WS2012R2'
 ])
-param imageOffer string = 'sql2019-ws2019'
+param imageOffer string = 'sql2019-ws2022'
 
 @description('SQL Server Sku')
 @allowed([
-  'Standard'
-  'Enterprise'
-  'SQLDEV'
-  'Web'
-  'Express'
+  'standard-gen2'
+  'enterprise-gen2'
+  'SQLDEV-gen2'
+  'web-gen2'
+  'enterprisedbengineonly-gen2'
 ])
-param sqlSku string = 'Standard'
+param sqlSku string = 'standard-gen2'
 
 @description('The admin user name of the VM')
 param adminUsername string
@@ -69,6 +69,21 @@ param logPath string = 'G:\\SQLLog'
 @description('Location for all resources.')
 param location string = resourceGroup().location
 
+@description('Security Type of the Virtual Machine.')
+@allowed([
+  'Standard'
+  'TrustedLaunch'
+])
+param securityType string = 'TrustedLaunch'
+
+var securityProfileJson = {
+  uefiSettings: {
+    secureBootEnabled: true
+    vTpmEnabled: true
+  }
+  securityType: securityType
+}
+
 var networkInterfaceName = '${virtualMachineName}-nic'
 var networkSecurityGroupName = '${virtualMachineName}-nsg'
 var networkSecurityGroupRules = [
@@ -92,8 +107,8 @@ var publicIpAddressSku = 'Basic'
 var diskConfigurationType = 'NEW'
 var nsgId = networkSecurityGroup.id
 var subnetRef = resourceId(existingVnetResourceGroup, 'Microsoft.Network/virtualNetWorks/subnets', existingVirtualNetworkName, existingSubnetName)
-var dataDisksLuns = array(range(0, sqlDataDisksCount))
-var logDisksLuns = array(range(sqlDataDisksCount, sqlLogDisksCount))
+var dataDisksLuns = range(0, sqlDataDisksCount)
+var logDisksLuns = range(sqlDataDisksCount, sqlLogDisksCount)
 var dataDisks = {
   createOption: 'Empty'
   caching: 'ReadOnly'
@@ -102,8 +117,12 @@ var dataDisks = {
   diskSizeGB: 1023
 }
 var tempDbPath = 'D:\\SQLTemp'
+var extensionName = 'GuestAttestation'
+var extensionPublisher = 'Microsoft.Azure.Security.WindowsAttestation'
+var extensionVersion = '1.0'
+var maaTenantName = 'GuestAttestation'
 
-resource publicIpAddress 'Microsoft.Network/publicIPAddresses@2021-08-01' = {
+resource publicIpAddress 'Microsoft.Network/publicIPAddresses@2022-01-01' = {
   name: publicIpAddressName
   location: location
   sku: {
@@ -114,7 +133,7 @@ resource publicIpAddress 'Microsoft.Network/publicIPAddresses@2021-08-01' = {
   }
 }
 
-resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2021-08-01' = {
+resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2022-01-01' = {
   name: networkSecurityGroupName
   location: location
   properties: {
@@ -122,7 +141,7 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2021-08-0
   }
 }
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2021-08-01' = {
+resource networkInterface 'Microsoft.Network/networkInterfaces@2022-01-01' = {
   name: networkInterfaceName
   location: location
   properties: {
@@ -147,7 +166,7 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2021-08-01' = {
   }
 }
 
-resource virtualMachine 'Microsoft.Compute/virtualMachines@2021-11-01' = {
+resource virtualMachine 'Microsoft.Compute/virtualMachines@2022-03-01' = {
   name: virtualMachineName
   location: location
   properties: {
@@ -155,6 +174,16 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2021-11-01' = {
       vmSize: virtualMachineSize
     }
     storageProfile: {
+      dataDisks: [for j in range(0, length(range(0, (sqlDataDisksCount + sqlLogDisksCount)))): {
+        lun: range(0, (sqlDataDisksCount + sqlLogDisksCount))[j]
+        createOption: dataDisks.createOption
+        caching: ((range(0, (sqlDataDisksCount + sqlLogDisksCount))[j] >= sqlDataDisksCount) ? 'None' : dataDisks.caching)
+        writeAcceleratorEnabled: dataDisks.writeAcceleratorEnabled
+        diskSizeGB: dataDisks.diskSizeGB
+        managedDisk: {
+          storageAccountType: dataDisks.storageAccountType
+        }
+      }]
       osDisk: {
         createOption: 'FromImage'
         managedDisk: {
@@ -167,16 +196,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2021-11-01' = {
         sku: sqlSku
         version: 'latest'
       }
-      dataDisks: [for j in range(0, (sqlDataDisksCount + sqlLogDisksCount)): {
-        lun: j
-        createOption: dataDisks.createOption
-        caching: ((j >= sqlDataDisksCount) ? 'None' : dataDisks.caching)
-        writeAcceleratorEnabled: dataDisks.writeAcceleratorEnabled
-        diskSizeGB: dataDisks.diskSizeGB
-        managedDisk: {
-          storageAccountType: dataDisks.storageAccountType
-        }
-      }]
     }
     networkProfile: {
       networkInterfaces: [
@@ -194,10 +213,38 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2021-11-01' = {
         provisionVMAgent: true
       }
     }
+    securityProfile: ((securityType == 'TrustedLaunch') ? securityProfileJson : null)
   }
 }
 
-resource sqlVirtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2021-11-01-preview' = {
+resource virtualMachineName_extension 'Microsoft.Compute/virtualMachines/extensions@2022-03-01' = if ((securityType == 'TrustedLaunch') && ((securityProfileJson.uefiSettings.secureBootEnabled == true) && (securityProfileJson.uefiSettings.vTpmEnabled == true))) {
+  parent: virtualMachine
+  name: extensionName
+  location: location
+  properties: {
+    publisher: extensionPublisher
+    type: extensionName
+    typeHandlerVersion: extensionVersion
+    autoUpgradeMinorVersion: true
+    enableAutomaticUpgrade: true
+    settings: {
+      AttestationConfig: {
+        MaaSettings: {
+          maaEndpoint: ''
+          maaTenantName: maaTenantName
+        }
+        AscSettings: {
+          ascReportingEndpoint: ''
+          ascReportingFrequency: ''
+        }
+        useCustomToken: 'false'
+        disableAlerts: 'false'
+      }
+    }
+  }
+}
+
+resource Microsoft_SqlVirtualMachine_sqlVirtualMachines_virtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2022-07-01-preview' = {
   name: virtualMachineName
   location: location
   properties: {
