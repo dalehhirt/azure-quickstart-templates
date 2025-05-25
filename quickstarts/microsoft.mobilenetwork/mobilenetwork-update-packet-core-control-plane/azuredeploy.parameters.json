@@ -5,8 +5,8 @@
         "location": {
             "value": "eastus"
         },
-        "existingMobileNetworkName": {
-            "value": "GET-PREREQ-existingMobileNetworkName"
+        "existingSiteId": {
+            "value": "GET-PREREQ-existingSiteId"
         },
         "existingSiteName": {
             "value": "GET-PREREQ-existingSiteName"
@@ -28,6 +28,18 @@
         },
         "accessGateway": {
             "value": "GET-PREREQ-accessGateway"
+        },        
+        "existingSliceName": {
+        "value": "GET-PREREQ-existingSliceName"
+        },
+        "mobileNetworkName": {
+            "value": "GEN-UNIQUE"
+        },
+        "mobileCountryCode": {
+            "value": "001"
+        },
+        "mobileNetworkCode": {
+            "value": "01"
         }
     }
 }

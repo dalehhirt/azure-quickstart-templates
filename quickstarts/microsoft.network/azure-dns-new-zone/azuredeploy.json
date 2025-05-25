@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.5.6.12127",
-      "templateHash": "17563758552659577113"
+      "version": "0.30.23.60470",
+      "templateHash": "418957128302192274"
     }
   },
   "parameters": {
@@ -13,7 +13,7 @@
       "type": "string",
       "defaultValue": "[format('{0}.azurequickstart.org', uniqueString(resourceGroup().id))]",
       "metadata": {
-        "description": "The name of the DNS zone to be created.  Must have at least 2 segements, e.g. hostname.org"
+        "description": "The name of the DNS zone to be created.  Must have at least 2 segments, e.g. hostname.org"
       }
     },
     "recordName": {
@@ -39,10 +39,10 @@
         "TTL": 3600,
         "ARecords": [
           {
-            "ipv4Address": "1.2.3.4"
+            "ipv4Address": "203.0.113.1"
           },
           {
-            "ipv4Address": "1.2.3.5"
+            "ipv4Address": "203.0.113.2"
           }
         ]
       },
@@ -54,7 +54,7 @@
   "outputs": {
     "nameServers": {
       "type": "array",
-      "value": "[reference(resourceId('Microsoft.Network/dnsZones', parameters('zoneName'))).nameServers]"
+      "value": "[reference(resourceId('Microsoft.Network/dnsZones', parameters('zoneName')), '2018-05-01').nameServers]"
     }
   }
 }
